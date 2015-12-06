@@ -1,4 +1,4 @@
-﻿# CodeIgniter Laravel-like static routes and filters
+# CodeIgniter Laravel-like static routes and filters
 
 A little group or libraries that let Codeigniter work as a static routing system with filters as simmilar to the Laravel routing system as I could have done.
 
@@ -135,20 +135,20 @@ There are two kinds of parameter definitions. The global definition, that will s
 Global parameter definition:
 
 	
-	Route::pattern('id',		'/[0-9]+/');
+	Route::pattern('id',		'[0-9]+');
 	Route::pattern('name',		'(:any)');
 	
 
 Local parameter definition:
 
 	
-	Route::post('user/{id}', 	'user/load/$1')->where('id', '/[0-9]+/');
+	Route::post('user/{id}', 	'user/load/$1')->where('id', '[0-9]+');
 	
 
 Multiple local parameter definition;
 
 	
-	Route::post('user/{id}/{name}', 	'user/load/$1/$2')->where(array('id' => '/[0-9]+/', 'name' => '(:any)'));
+	Route::post('user/{id}/{name}', 	'user/load/$1/$2')->where(array('id' => '[0-9]+', 'name' => '(:any)'));
 	
 	
 ### Optional parameters
@@ -157,7 +157,7 @@ There can be defined optional parameters. That will let Codeigniter use that rou
 The parameter definition is the same as the normal Named Parameters (the parameter name without the question mark "?").
 
 	
-	Route::any('user/{id?}', 	'user/load/$1')->where('id', '/[0-9]+/');
+	Route::any('user/{id?}', 	'user/load/$1')->where('id', '[0-9]+');
 	
 	
 This will let the developer use "user" and "user/12" as routes using Codeigniter the method load in the controller user in both calls.
@@ -165,7 +165,7 @@ This will let the developer use "user" and "user/12" as routes using Codeigniter
 The developer can also stack multiple optional parameters like this and all the possible permutations of the optional uris will be defined automatically:
 
 	
-	Route::any('user/{id?}/{name?}/{telephone?}', 	'user/load/$1/$2/$3')->where('id', '/[0-9]+/');
+	Route::any('user/{id?}/{name?}/{telephone?}', 	'user/load/$1/$2/$3')->where('id', '[0-9]+');
 	
 
 ### Accessing named and optional parameters
@@ -280,6 +280,7 @@ Another way of define route groups
 
 This will autocreate all this routes:
 
+```
   GET     /photos         index       displaying a list of photos
   GET     /photos/new     create_new  return an HTML form for creating a photo
   POST    /photos         create      create a new photo
@@ -287,7 +288,8 @@ This will autocreate all this routes:
   GET     /photos/{id}/edit   edit    return the HTML form for editing a single photo
   PUT     /photos/{id}    update      update a specific photo
   DELETE  /photos/{id}    delete      delete a specific photo
-  
+```
+
   The $options parameter it's optional and can hold the same values as any other $options parameter
   of the rest of route methods (like filters, etc...).
 
@@ -299,13 +301,14 @@ The developer can make with one call a 6 tier route definition
 	
 	Route::context('photos', 'photo');
 	
-
+```
   photo/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)    	$1/photo/$2/$3/$4/$5/$6
   photo/(:any)/(:any)/(:any)/(:any)/(:any)				$1/photo/$2/$3/$4/$5
   photo/(:any)/(:any)/(:any)/(:any)						$1/photo/$2/$3/$4
   photo/(:any)/(:any)/(:any)							$1/photo/$2/$3
   photo/(:any)/(:any)									$1/photo/$2
   photo/(:any)											$1/photo
+```
 
 ### Block routes
 

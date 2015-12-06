@@ -24,9 +24,9 @@
 		if (is_dir(APPPATH.'routes'))
 		{
 			$file_list = scandir(APPPATH.'routes');
-			foreach($file_list as $file)
+			foreach ($file_list as $file)
 			{
-				if (is_file(APPPATH.'routes/'.$file))
+				if (is_file(APPPATH.'routes/'.$file) and pathinfo($file, PATHINFO_EXTENSION) == 'php')
 				{
 					include(APPPATH.'routes/'.$file);
 				}
@@ -83,8 +83,7 @@
 				if (isset($val[$http_verb]))
 				{
 					$val = $val[$http_verb];
-				}
-				else
+				} else
 				{
 					continue;
 				}
@@ -100,7 +99,7 @@
 			if (preg_match('#^'.$key.'$#', $uri, $matches))
 			{
 				// Are we using callbacks to process back-references?
-				if ( ! is_string($val) && is_callable($val))
+				if (!is_string($val) && is_callable($val))
 				{
 					// Remove the original string from the matches array.
 					array_shift($matches);
@@ -129,6 +128,18 @@
 	}
 
 
+	/**
+	 * Set default controller
+	 *
+	 * @return	void
+	 */
+	protected function _set_default_controller()
+	{
+		parent::_set_default_controller();
+        
+		$this->active_route = 'default_controller';
+	}
+        
 	private function _load_request_uri($uri)
 	{
 		$this->active_route = $uri;
